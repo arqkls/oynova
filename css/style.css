@@ -1,0 +1,771 @@
+:root {
+  --pink: #ff8ec7;
+  --pink-dark: #e35fa5;
+  --cream: #fff6e8;
+  --ink: #5b3a55;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #bfe9ff;
+  color: var(--ink);
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+#scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.brand {
+  background: rgba(255, 255, 255, 0.78);
+  border: 3px solid #fff;
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 6px 18px rgba(122, 72, 110, 0.18);
+  line-height: 1.15;
+}
+
+.brand-name {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--pink-dark);
+}
+
+.brand-world {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #8d6b88;
+}
+
+.mission {
+  background: rgba(255, 255, 255, 0.9);
+  border: 3px solid #fff;
+  border-radius: 18px;
+  padding: 9px 16px 10px;
+  max-width: 300px;
+  box-shadow: 0 6px 18px rgba(122, 72, 110, 0.16);
+}
+
+.mission-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  background: var(--pink);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.mission p {
+  margin: 6px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.controls {
+  /* Keep the hint above the mic and the speaker button. */
+  margin: 0 0 110px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 3px solid #fff;
+  border-radius: 999px;
+  padding: 9px 22px;
+  font-size: 15px;
+  box-shadow: 0 6px 18px rgba(122, 72, 110, 0.16);
+}
+
+.controls b {
+  color: var(--pink-dark);
+}
+
+.key-badge {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 3px solid #fff;
+  color: #b9a9b4;
+  font-weight: 700;
+  font-size: 14px;
+  opacity: 0.65;
+  transition: all 0.35s ease;
+}
+
+.key-badge svg {
+  width: 24px;
+  height: 24px;
+}
+
+.key-badge.found {
+  color: #b57a00;
+  background: #fff3c4;
+  border-color: #ffe28a;
+  opacity: 1;
+  transform: scale(1.06);
+  box-shadow: 0 0 22px rgba(255, 196, 0, 0.55);
+}
+
+.touch-controls {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 18px calc(18px + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+  z-index: 10;
+}
+
+.pad {
+  display: flex;
+  pointer-events: auto;
+}
+
+.pad-walk {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pad-turn {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.pad-btn {
+  width: 78px;
+  height: 78px;
+  padding: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--pink-dark);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(122, 72, 110, 0.22);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.08s ease, background 0.12s ease, color 0.12s ease;
+}
+
+.pad-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.pad-btn.is-held,
+.pad-btn:active {
+  background: var(--pink);
+  color: #fff;
+  transform: scale(0.94);
+  box-shadow: 0 3px 10px rgba(227, 95, 165, 0.4);
+}
+
+.pad-btn:focus-visible {
+  outline: 3px solid var(--pink-dark);
+  outline-offset: 2px;
+}
+
+.hint-touch {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .hint-keys {
+    display: none;
+  }
+  .hint-touch {
+    display: inline;
+  }
+  .controls {
+    margin-bottom: 200px;
+  }
+  .key-badge {
+    top: 12px;
+    right: 14px;
+  }
+}
+
+/* VR entry: only shown when the headset browser supports immersive VR. */
+.vr-btn {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 12;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 3px solid #fff;
+  background: #6c7cf5;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(60, 70, 140, 0.3);
+}
+
+.vr-btn[hidden] {
+  display: none;
+}
+
+/* Inside the headset the screen buttons are useless: the child walks and listens
+   with the VR controllers instead, so the phone and laptop UI gets out of the way. */
+body.in-vr .touch-controls,
+body.in-vr .mic-btn,
+body.in-vr .repeat-btn,
+body.in-vr .key-badge,
+body.in-vr .controls,
+body.in-vr .vr-btn {
+  display: none;
+}
+
+.vr-btn:active {
+  transform: scale(0.96);
+}
+
+/* The companion's spoken line, as a transcription bubble over his head. */
+.speech {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -100%);
+  max-width: 270px;
+  padding: 10px 16px 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(122, 72, 110, 0.24);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--ink);
+  pointer-events: none;
+  z-index: 35;          /* above the colour-round dim (30): the words must stay readable over it */
+}
+
+.speech[hidden] {
+  display: none;
+}
+
+.speech::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  border: 9px solid transparent;
+  border-top-color: #fff;
+}
+
+.mic-btn {
+  position: fixed;
+  left: 50%;
+  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 84px;
+  height: 84px;
+  justify-content: center;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background: var(--gold, #ffc94a);
+  color: #3a2b00;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(122, 72, 110, 0.3);
+  pointer-events: auto;
+  z-index: 11;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.mic-btn svg {
+  width: 34px;
+  height: 34px;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.mic-btn[hidden] {
+  display: none;
+}
+
+.mic-btn:active {
+  transform: translateX(-50%) scale(0.94);
+}
+
+.mic-btn.is-listening {
+  background: #ff8a5c;
+  animation: mic-pulse 0.9s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  50% { box-shadow: 0 0 0 14px rgba(255, 138, 92, 0.25); }
+}
+
+/* Speaker button: the child taps it to hear the last line again. */
+.repeat-btn {
+  left: calc(50% + 76px);
+  width: 62px;
+  height: 62px;
+  bottom: calc(37px + env(safe-area-inset-bottom, 0px));
+  border-color: #e7eef6;
+  background: #fff;
+  color: #4a5d7a;
+  font-size: 10px;
+}
+
+.repeat-btn svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* On a phone the turn buttons sit right where the mic and the speaker were,
+   so both buttons move up above the walk/turn pads. */
+@media (hover: none) and (pointer: coarse) {
+  .mic-btn {
+    bottom: calc(126px + env(safe-area-inset-bottom, 0px));
+  }
+  .repeat-btn {
+    bottom: calc(137px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (max-height: 520px) {
+  .mic-btn {
+    width: 66px;
+    height: 66px;
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+  .mic-btn span {
+    display: none;
+  }
+  .repeat-btn {
+    left: calc(50% + 62px);
+    width: 50px;
+    height: 50px;
+    bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-height: 520px) {
+  .mic-btn {
+    width: 66px;
+    height: 66px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .mic-btn span {
+    display: none;
+  }
+  .repeat-btn {
+    left: calc(50% + 62px);
+    width: 50px;
+    height: 50px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 110px;
+  transform: translate(-50%, 14px);
+  background: var(--pink);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 3px solid #fff;
+  box-shadow: 0 10px 26px rgba(122, 72, 110, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 12;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.win {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(92, 58, 90, 0.35);
+  backdrop-filter: blur(3px);
+  z-index: 20;
+  padding: 20px;
+}
+
+.win[hidden] {
+  display: none;
+}
+
+.win-card {
+  text-align: center;
+  background: linear-gradient(180deg, #fffdf7, #ffe9f5);
+  border: 5px solid #fff;
+  border-radius: 28px;
+  padding: 30px 34px 26px;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(90, 47, 86, 0.3);
+  animation: pop 0.45s ease-out;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.win-tag {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--pink-dark);
+}
+
+.win-card h1 {
+  margin: 8px 0 10px;
+  font-size: 28px;
+  line-height: 1.15;
+  color: #c1478b;
+}
+
+.win-card p {
+  margin: 0 0 18px;
+  font-size: 16px;
+}
+
+.win-card b {
+  color: #b57a00;
+}
+
+.win-card button {
+  font: inherit;
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  background: var(--pink);
+  border: none;
+  border-radius: 999px;
+  padding: 13px 30px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(227, 95, 165, 0.4);
+}
+
+.win-card button:hover {
+  background: var(--pink-dark);
+}
+
+#loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #a8e2ff, #ffe3f4);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pink-dark);
+  transition: opacity 0.5s ease;
+  z-index: 30;
+}
+
+#loading.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .brand-name {
+    font-size: 18px;
+  }
+  .mission {
+    max-width: 230px;
+  }
+  .mission p {
+    font-size: 14px;
+  }
+  .controls {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+  .key-badge {
+    font-size: 12px;
+    padding: 6px 10px 6px 8px;
+  }
+}
+
+/* Teleport fade between the garden, the stone hall and the magic forest. */
+#flash {
+  position: fixed;
+  inset: 0;
+  background: #04060a;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 40;
+}
+
+/* Colour round: the companion asks for a colour, the child taps the crystal.
+   The card sits above every other control, so a tap cannot walk or turn. */
+.colour-round {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(60, 34, 58, 0.42);
+  backdrop-filter: blur(4px);
+}
+
+.colour-round[hidden] {
+  display: none;
+}
+
+.colour-card {
+  width: min(680px, 100%);
+  text-align: center;
+  background: linear-gradient(180deg, #fffdf7, #ffe9f5);
+  border: 5px solid #fff;
+  border-radius: 28px;
+  padding: 18px 16px 24px;
+  box-shadow: 0 20px 50px rgba(90, 47, 86, 0.35);
+  animation: pop 0.35s ease-out;
+}
+
+.colour-pips {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.colour-pip {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #efd3e4;
+  border: 2px solid #fff;
+  box-shadow: inset 0 0 0 1px rgba(122, 72, 110, 0.16);
+}
+
+.colour-pip.done {
+  background: var(--gold, #ffc94a);
+  box-shadow: 0 0 10px rgba(255, 196, 0, 0.6);
+}
+
+.colour-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.colour-prompt {
+  margin: 0;
+  font-size: clamp(20px, 4.4vw, 30px);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.colour-listen {
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--gold, #ffc94a);
+  color: #6b3d00;
+  box-shadow: 0 6px 16px rgba(122, 72, 110, 0.3);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: gem-glow 1.8s ease-in-out infinite;
+}
+
+.colour-listen svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.colour-listen:active {
+  transform: scale(0.94);
+}
+
+.colour-shelf {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(8px, 2.4vw, 26px);
+}
+
+.crystal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 0;
+  max-width: 150px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.12s ease;
+}
+
+.crystal:active {
+  transform: scale(0.96);
+}
+
+.crystal:focus-visible {
+  outline: 3px solid var(--pink-dark);
+  outline-offset: 6px;
+  border-radius: 14px;
+}
+
+.crystal-gem {
+  position: relative;
+  display: block;
+  width: min(120px, 24vw);
+  aspect-ratio: 0.72;
+  background: var(--gem, #ccc);
+  clip-path: polygon(50% 0%, 86% 22%, 100% 60%, 50% 100%, 0% 60%, 14% 22%);
+  filter: drop-shadow(0 10px 14px rgba(70, 40, 60, 0.32));
+}
+
+.crystal-gem::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  top: 14%;
+  width: 40%;
+  height: 24%;
+  background: rgba(255, 255, 255, 0.55);
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  transform: rotate(-12deg);
+}
+
+.crystal-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.crystal.is-right .crystal-gem {
+  animation: gem-glow 0.6s ease-out;
+}
+
+.crystal.is-wrong {
+  animation: gem-shake 0.4s ease;
+}
+
+.crystal.is-hint .crystal-gem {
+  animation: gem-pulse 0.9s ease-in-out infinite;
+  filter: drop-shadow(0 0 16px rgba(255, 201, 74, 0.95)) drop-shadow(0 10px 14px rgba(70, 40, 60, 0.3));
+}
+
+.crystal-fly {
+  position: fixed;
+  pointer-events: none;
+  z-index: 40;
+  clip-path: polygon(50% 0%, 86% 22%, 100% 60%, 50% 100%, 0% 60%, 14% 22%);
+  transform-origin: 50% 50%;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1), opacity 0.7s ease 0.1s;
+}
+
+body.colour-open .touch-controls,
+body.colour-open .mic-btn {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+@keyframes gem-glow {
+  0% { filter: drop-shadow(0 0 0 rgba(255, 201, 74, 0)); }
+  40% { filter: drop-shadow(0 0 22px rgba(255, 201, 74, 1)) drop-shadow(0 0 34px rgba(255, 240, 150, 0.8)); }
+  100% { filter: drop-shadow(0 10px 14px rgba(70, 40, 60, 0.32)); }
+}
+
+@keyframes gem-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@keyframes gem-pulse {
+  50% { transform: scale(1.07); }
+}

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oynova — Barys: Stone Castle</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="importmap">
+    { "imports": { "three": "./libs/three.module.js" } }
+  </script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div id="hud">
+    <div class="top">
+      <div class="brand">
+        <span class="brand-name">Oynova</span>
+        <span class="brand-world">Stone Castle</span>
+      </div>
+      <div class="mission">
+        <span class="mission-tag">Mission</span>
+        <p id="missionText">Кілт қайда?</p>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="key-badge" id="keyBadge" title="Magic key">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="8" cy="8" r="4.2" fill="none" stroke="currentColor" stroke-width="2.2" />
+          <path d="M11 11l8.5 8.5M16.5 16.5l2.4-2.4M14 19l2.4-2.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+        <span>Key</span>
+      </div>
+      <p class="controls">
+        <span class="hint-keys"><b>W / S</b> or ↑ ↓ walk · <b>A / D</b> or ← → turn · drag to look</span>
+        <span class="hint-touch">Hold the round buttons · drag the right side to look</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="speech" id="speech" hidden><span id="speechText"></span></div>
+
+  <div class="colour-round" id="colourRound" hidden>
+    <div class="colour-card" role="dialog" aria-modal="true" aria-labelledby="colourPrompt">
+      <div class="colour-pips" id="colourPips" aria-hidden="true"></div>
+      <div class="colour-head">
+        <p class="colour-prompt" id="colourPrompt">Кристалды тап!</p>
+        <button class="colour-listen" id="colourListen" type="button" aria-label="Тыңда">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9h4l5-4v14l-5-4H4z" />
+            <path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <path d="M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="colour-shelf" id="colourCrystals"></div>
+    </div>
+  </div>
+
+  <div class="touch-controls" id="touchControls">
+    <div class="pad pad-walk" aria-label="Walk">
+      <button class="pad-btn" type="button" data-hold="forward" aria-label="Walk forward">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7.5 9h-15z" /></svg>
+      </button>
+      <button class="pad-btn" type="button" data-hold="back" aria-label="Walk back">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19l-7.5-9h15z" /></svg>
+      </button>
+    </div>
+    <div class="pad pad-turn" aria-label="Turn">
+      <button class="pad-btn" type="button" data-hold="left" aria-label="Turn left">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-9 7 9 7z" /></svg>
+      </button>
+      <button class="pad-btn" type="button" data-hold="right" aria-label="Turn right">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l9 7-9 7z" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <button class="mic-btn" id="micButton" type="button" aria-label="Say the word" title="Кілт деп айт">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="9" y="3" width="6" height="11" rx="3" />
+      <path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <span>Айт</span>
+  </button>
+
+  <button class="vr-btn" id="vrButton" type="button" aria-label="Enter VR with a headset" hidden>Enter VR</button>
+
+  <button class="mic-btn repeat-btn" id="repeatButton" type="button" aria-label="Say it again" title="Қайтала">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z" />
+      <path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <span>Қайтала</span>
+  </button>
+
+  <div class="toast" id="toast"></div>
+  <div id="flash"></div>
+
+  <div class="win" id="win" hidden>
+    <div class="win-card">
+      <p class="win-tag">Жарайсың!</p>
+      <h1>The red path!</h1>
+      <p>You found the key, opened the stone castle and came out in the magic forest.</p>
+      <button id="playAgain" type="button">Play again</button>
+    </div>
+  </div>
+
+  <div id="loading"><span>Preparing the magic world…</span></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

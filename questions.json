@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": "colour_qyzyl",
+      "kk": "қызыл",
+      "en": "red",
+      "hex": "#e03131",
+      "ask": "Қызыл кристалды тап!",
+      "audio": "assets/kazakh/ask_qyzyl.wav",
+      "quiz": "Қызыл кристалл қайда?",
+      "quiz_audio": "assets/kazakh/quiz_qyzyl.wav"
+    },
+    {
+      "id": "colour_kok",
+      "kk": "көк",
+      "en": "blue",
+      "hex": "#2f6fed",
+      "ask": "Көк кристалды тап!",
+      "audio": "assets/kazakh/ask_kok.wav",
+      "quiz": "Көк кристалл қайда?",
+      "quiz_audio": "assets/kazakh/quiz_kok.wav"
+    },
+    {
+      "id": "colour_sary",
+      "kk": "сары",
+      "en": "yellow",
+      "hex": "#f2b705",
+      "ask": "Сары кристалды тап!",
+      "audio": "assets/kazakh/ask_sary.wav",
+      "quiz": "Сары кристалл қайда?",
+      "quiz_audio": "assets/kazakh/quiz_sary.wav"
+    },
+    {
+      "id": "colour_zhassyl",
+      "kk": "жасыл",
+      "en": "green",
+      "hex": "#2f9e44",
+      "ask": "Жасыл кристалды тап!",
+      "audio": "assets/kazakh/ask_zhassyl.wav",
+      "quiz": "Жасыл кристалл қайда?",
+      "quiz_audio": "assets/kazakh/quiz_zhassyl.wav"
+    },
+    {
+      "id": "colour_aq",
+      "kk": "ақ",
+      "en": "white",
+      "hex": "#f4f4ef",
+      "ask": "Ақ кристалды тап!",
+      "audio": "assets/kazakh/ask_aq.wav",
+      "quiz": "Ақ кристалл қайда?",
+      "quiz_audio": "assets/kazakh/quiz_aq.wav"
+    },
+    {
+      "id": "colour_qara",
+      "kk": "қара",
+      "en": "black",
+      "hex": "#2b2b2b",
+      "ask": "Қара кристалды тап!",
+      "audio": "assets/kazakh/ask_qara.wav",
+      "quiz": "Қара кристалл қайда?",
+      "quiz_audio": "assets/kazakh/quiz_qara.wav"
+    }
+  ]
+}
